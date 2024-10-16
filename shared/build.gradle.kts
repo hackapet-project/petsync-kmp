@@ -1,6 +1,16 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    id("maven-publish")
+}
+
+group = "com.hackapet.petsync_kmp"
+version = "1.0.0"
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
 }
 
 kotlin {
