@@ -1,7 +1,6 @@
 package com.hackapet.petsync_kmp.di
 
 import android.content.Context
-import com.hackapet.petsync_kmp.di.AppModule.*
 
 class AndroidAppModule {
 

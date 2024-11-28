@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     id("maven-publish")
 }
 
@@ -39,8 +40,17 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
+
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation (libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.content.negotiation)
+
+            implementation(libs.napier)
         }
 
         androidMain.dependencies {
@@ -49,8 +59,6 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-
-
     }
 }
 
