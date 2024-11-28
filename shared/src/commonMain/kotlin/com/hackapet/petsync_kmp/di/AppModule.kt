@@ -1,5 +1,7 @@
 package com.hackapet.petsync_kmp.di
 
+import com.hackapet.petsync_kmp.PetRepository
+import com.hackapet.petsync_kmp.data.InMemoryPetRepository
 import com.hackapet.petsync_kmp.data.datasources.remote.ApiRemoteDataSource
 import com.hackapet.petsync_kmp.data.datasources.remote.RemoteDataSource
 import io.github.aakira.napier.DebugAntilog
@@ -37,6 +39,7 @@ class AppModule(
 
 private val dataModule = module {
     single<RemoteDataSource> { ApiRemoteDataSource(get()) }
+    single<PetRepository> { InMemoryPetRepository() }
     single<HttpClient> {
         createHttpClient(get<String>(named("baseUrl")))
     }
@@ -65,9 +68,7 @@ private fun createHttpClient(baseUrl: String) = HttpClient {
 
     }.also { Napier.base(DebugAntilog()) }
 
-    defaultRequest {
-        url(baseUrl)
-    }
+    defaultRequest { url(baseUrl) }
 }
 
 fun initKoin(config: KoinAppDeclaration? = null, appModule: AppModule) {
