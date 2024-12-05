@@ -15,6 +15,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.dsl.KoinAppDeclaration
@@ -71,9 +72,10 @@ private fun createHttpClient(baseUrl: String) = HttpClient {
     defaultRequest { url(baseUrl) }
 }
 
-fun initKoin(config: KoinAppDeclaration? = null, appModule: AppModule) {
+
+fun initKoin(config: KoinAppDeclaration? = null, appModule: AppModule, modules: List<Module> = emptyList()) {
     startKoin {
         config?.invoke(this)
-        modules(dataModule, appModule.moduleKoin())
+        modules(modules + dataModule + appModule.moduleKoin())
     }
 }
