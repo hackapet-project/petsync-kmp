@@ -1,9 +1,12 @@
 package com.hackapet.petsync_kmp.di
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hackapet.petsync_kmp.PetRepository
 import com.hackapet.petsync_kmp.data.InMemoryPetRepository
 import com.hackapet.petsync_kmp.data.datasources.remote.ApiRemoteDataSource
 import com.hackapet.petsync_kmp.data.datasources.remote.RemoteDataSource
+import com.hackapet.petsync_kmp.ui.home.GetPetsUseCase
+import com.hackapet.petsync_kmp.ui.home.HomeViewModel
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
@@ -16,8 +19,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
-import org.koin.core.scope.Scope
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
@@ -46,14 +49,15 @@ private val dataModule = module {
     }
 }
 
+private val useCasesModule = module {
+    single { GetPetsUseCase(get()) }
+}
+
+private val viewModelsModule = module {
+    viewModel { HomeViewModel(get()) }
+}
 
 private fun createHttpClient(baseUrl: String) = HttpClient {
-
-    // TODO requiere de implementacion por plataforma de momento no funciona
-    /*       install(HttpCache) {
-               publicStorage(get<CacheStorage>())
-           }
-    */
 
     install(ContentNegotiation) {
         json(Json { ignoreUnknownKeys = true })
@@ -72,10 +76,13 @@ private fun createHttpClient(baseUrl: String) = HttpClient {
     defaultRequest { url(baseUrl) }
 }
 
-
-fun initKoin(config: KoinAppDeclaration? = null, appModule: AppModule, modules: List<Module> = emptyList()) {
+fun initKoin(
+    config: KoinAppDeclaration? = null,
+    appModule: AppModule,
+    modules: List<Module> = emptyList()
+) {
     startKoin {
         config?.invoke(this)
-        modules(modules + dataModule + appModule.moduleKoin())
+        modules(modules + dataModule + useCasesModule + viewModelsModule + appModule.moduleKoin())
     }
 }

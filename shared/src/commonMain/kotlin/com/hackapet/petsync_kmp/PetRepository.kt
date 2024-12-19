@@ -1,16 +1,14 @@
 package com.hackapet.petsync_kmp
 
-import kotlinx.coroutines.flow.Flow
-
 interface PetRepository {
 
-    fun findAll(): Flow<List<Pet>>
+    fun findAll(): List<Pet>
 
-    fun findById(id: Long): Flow<Pet>
+    fun findById(id: Long): Pet?
 
-    fun upsert(pet: Pet): Flow<Long>
+    fun upsert(pet: Pet): Long
 
-    fun remove(pet: Pet): Flow<Long>
+    fun remove(pet: Pet): Long
 
-    fun remove(id: Long): Flow<Long>
+    fun remove(id: Long): Long
 }

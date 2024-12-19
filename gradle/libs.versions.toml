@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.0"
+koinAndroidxCompose = "3.4.6"
 kotlin = "2.0.0"
 compose = "1.5.4"
 compose-material3 = "1.1.2"
@@ -8,10 +9,13 @@ kotlinxCoroutinesCore = "1.9.0"
 koin="3.6.0-Beta4"
 kotlinxSerializationJson = "1.7.3"
 ktorClientCore = "3.0.0"
+lifecycleViewmodelKtx = "2.8.0"
 napier = "2.6.1"
+koinViewmodel="4.0.0"
 
 
 [libraries]
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -25,7 +29,14 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-compose= { group = "io.insert-koin", name = "koin-compose" }
+
+koin-compose-viewmodel= { module = "io.insert-koin:koin-compose-viewmodel", version.ref="koinViewmodel" }
+
 koin-android = { group = "io.insert-koin", name = "koin-android"}
+
+androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelKtx" }
+
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientCore" }
