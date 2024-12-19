@@ -44,6 +44,9 @@ kotlin {
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
 
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -51,10 +54,12 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
 
             implementation(libs.napier)
+
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
 
         androidMain.dependencies {
-            implementation(libs.koin.android)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

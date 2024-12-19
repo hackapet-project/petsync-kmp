@@ -32,32 +32,25 @@ class InMemoryPetRepository : PetRepository {
         Pair(21, Pet(21, Pet.Type.DOG, "Bulldog", "Bob", "A friendly dog")),
     )
 
-    override fun findAll(): Flow<List<Pet>> {
-        return flowOf(pets.values.toList())
+    override fun findAll(): List<Pet> {
+        return pets.values.toList()
     }
 
-    override fun findById(id: Long): Flow<Pet> {
-        return flowOf(pets[id]!!)
+
+    override fun findById(id: Long): Pet? {
+        return pets[id]
     }
 
-    override fun upsert(pet: Pet): Flow<Long> {
-        return flow {
-            pets[pet.id] = pet
-            emit(pet.id)
-        }
+    override fun upsert(pet: Pet): Long {
+        pets[pet.id] = pet
+        return pet.id
     }
 
-    override fun remove(pet: Pet): Flow<Long> {
-        return flow {
-            val removed = pets.remove(pet.id)
-            emit(removed?.id ?: -1)
-        }
+    override fun remove(pet: Pet): Long {
+        return pets.remove(pet.id)?.id ?: -1
     }
 
-    override fun remove(id: Long): Flow<Long> {
-        return flow {
-            val removed = pets.remove(id)
-            emit(removed?.id ?: -1)
-        }
+    override fun remove(id: Long): Long {
+        return  pets.remove(id)?.id ?: -1
     }
 }
