@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.hackapet.petsync_kmp"
-version = "1.0.3"
+version = "1.0.14"
 
 publishing {
     repositories {

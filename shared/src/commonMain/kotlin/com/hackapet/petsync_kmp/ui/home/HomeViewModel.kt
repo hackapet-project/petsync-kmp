@@ -36,11 +36,12 @@ class HomeViewModel(
     private val _petList = MutableStateFlow(PetListUiState(false))
     val petList: StateFlow<PetListUiState> = _petList.asStateFlow()
 
-    fun loadPets() {
+    fun loadPets(): StateFlow<PetListUiState> {
         viewModelScope.launch {
             _petList.value =
                 PetListUiState(true, listOf(CreteNewPetItem) + getPetsUseCase().toPetItemList())
         }
+        return petList
     }
 
     private inline fun Pet.toPetItem() = PetItem.DetailPetItem(id, this)

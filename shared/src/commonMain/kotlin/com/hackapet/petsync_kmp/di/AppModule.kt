@@ -5,6 +5,8 @@ import com.hackapet.petsync_kmp.PetRepository
 import com.hackapet.petsync_kmp.data.InMemoryPetRepository
 import com.hackapet.petsync_kmp.data.datasources.remote.ApiRemoteDataSource
 import com.hackapet.petsync_kmp.data.datasources.remote.RemoteDataSource
+import com.hackapet.petsync_kmp.ui.details.DetailViewModel
+import com.hackapet.petsync_kmp.ui.details.GetPetUseCase
 import com.hackapet.petsync_kmp.ui.home.GetPetsUseCase
 import com.hackapet.petsync_kmp.ui.home.HomeViewModel
 import io.github.aakira.napier.DebugAntilog
@@ -51,10 +53,12 @@ private val dataModule = module {
 
 private val useCasesModule = module {
     single { GetPetsUseCase(get()) }
+    single { GetPetUseCase(get()) }
 }
 
 private val viewModelsModule = module {
     viewModel { HomeViewModel(get()) }
+    viewModel { (id: Long) -> DetailViewModel(get(), id) }
 }
 
 private fun createHttpClient(baseUrl: String) = HttpClient {
